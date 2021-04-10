@@ -1,39 +1,50 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
+
   {
     path: 'tabs',
     component: TabsPage,
     children: [
+
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'discover',
+        loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverPageModule)
+      },
+      // {
+      //   path: 'discover-detail',
+      //   loadChildren: () => import('./discover/discover-detail/discover-detail.module').then(m => m.DiscoverDetailPageModule)
+      // },
+      {
+        path: 'offers',
+        loadChildren: () => import('./offers/offers.module').then(m => m.OffersPageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'new-offer',
+        loadChildren: () => import('./offers/new-offer/new-offer.module').then(m => m.NewOfferPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'edit-offer/:id',
+        loadChildren: () => import('./offers/edit-offer/edit-offer.module').then(m => m.EditOfferPageModule)
       },
+      {
+        path: 'offer-booking/:id',
+        loadChildren: () => import('./offers/offer-booking/offer-booking.module').then(m => m.OfferBookingPageModule)
+      }
+      ,
       {
         path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
+        redirectTo: '/tabs/discover',
+        pathMatch: 'full',
+      },
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
